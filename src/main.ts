@@ -34,6 +34,10 @@ class Main extends Phaser.Scene {
 
     this.load.image("newgame", "assets/new_game.png");
 
+    this.load.audio(
+      'theme', ['music/holder.mp3']
+    );
+
     for (let i = 0; i <= 9; i++) {
         this.load.image(`${i}`, `assets/${i}.png`);
     }
@@ -115,6 +119,10 @@ class Main extends Phaser.Scene {
       +this.game.config.height - 1
     );
     this.group = this.add.group();
+
+    // add music
+    const music = this.sound.add("theme");
+    music.play({ loop: true, volume: 0.5 });
 
     const light = this.lights
       .addLight(
