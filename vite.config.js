@@ -1,4 +1,7 @@
 /** @type {import('vite').UserConfig} */
+
+import { defineConfig } from 'vite'
+
 export default {
-    base: "./"
+    base: "/suika-clone/"
 };
