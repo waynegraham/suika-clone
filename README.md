@@ -7,3 +7,13 @@ Game clone build with Phaser, Matter.js, Typescript, and Vite. Based on https://
     npm install
     npm run dev
 
+# TODO
+
+- Update sprites
+- Update backgrounds
+- Fix frame bounds
+- Next shape
+- Add order
+- Settings for 
+    - gravity
+    - weight
