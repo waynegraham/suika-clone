@@ -335,7 +335,8 @@ new Phaser.Game({
     matter: {
       debug: true,
       gravity: {
-        y: 1
+        y: 1,
+        x: 0
       }
     },
   },
