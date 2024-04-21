@@ -12,6 +12,8 @@ Game clone build with Phaser, Matter.js, Typescript, and Vite. Based on https://
 - Update sprites
 - Update backgrounds
 - Fix frame bounds
+- LocalStorage high score
+- Get music
 - Next shape
 - Add order
 - Settings for 

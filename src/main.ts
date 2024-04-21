@@ -161,14 +161,16 @@ class Main extends Phaser.Scene {
         +this.game.config.height / 2,
         "newgame"
       )
-      .setScale(0.4)
+      // .setScale(0.4)
+      .setScale(1.0)
       .setInteractive({ useHandCursor: true })
       .setVisible(false);
     button.postFX.addGlow(0x000000, 0.75);
     button.on("pointerover", () => {
       this.tweens.add({
         targets: button,
-        scale: 0.425,
+        // scale: 0.425,
+        scale: 1.25,
         ease: "Linear",
         duration: 100,
       });
@@ -176,7 +178,8 @@ class Main extends Phaser.Scene {
     button.on("pointerout", () => {
       this.tweens.add({
         targets: button,
-        scale: 0.4,
+        // scale: 0.4,
+        scale: 1.0,
         ease: "Linear",
         duration: 100,
       });
@@ -314,7 +317,10 @@ new Phaser.Game({
   physics: {
     default: "matter",
     matter: {
-      debug: false,
+      debug: true,
+      gravity: {
+        y: 1
+      }
     },
   },
 });
