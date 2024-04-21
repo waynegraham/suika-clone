@@ -11,6 +11,7 @@ Game clone build with Phaser, Matter.js, Typescript, and Vite. Based on https://
 
 - Update sprites
 - Update backgrounds
+- Show upgrade path
 - Next Fruit
     - create a queue to push fruit into
 - Fix frame bounds
