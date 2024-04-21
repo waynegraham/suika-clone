@@ -11,6 +11,8 @@ Game clone build with Phaser, Matter.js, Typescript, and Vite. Based on https://
 
 - Update sprites
 - Update backgrounds
+- Next Fruit
+    - create a queue to push fruit into
 - Fix frame bounds
 - LocalStorage high score
 - Get music
@@ -19,3 +21,5 @@ Game clone build with Phaser, Matter.js, Typescript, and Vite. Based on https://
 - Settings for 
     - gravity
     - weight
+    - friction
+

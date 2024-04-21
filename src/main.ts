@@ -5,20 +5,22 @@ import Phaser from "phaser";
 type Fruit = {
   name: string;
   radius: number;
+  bounce: number;
+  friction: number;
 };
 
 const fruits: Fruit[] = [
-  { name: "fruit1", radius: 30 },
-  { name: "fruit2", radius: 35 },
-  { name: "fruit3", radius: 40 },
-  { name: "fruit4", radius: 50 },
-  { name: "fruit5", radius: 65 },
-  { name: "fruit6", radius: 70 },
-  { name: "fruit7", radius: 80 },
-  { name: "fruit8", radius: 90 },
-  { name: "fruit9", radius: 100 },
-  { name: "fruit10", radius: 110 },
-  { name: "fruit11", radius: 120 },
+  { name: "fruit1", radius: 30, bounce: 0.8, friction: 0.005 },
+  { name: "fruit2", radius: 35, bounce: 0.6, friction: 0.005 },
+  { name: "fruit3", radius: 40, bounce: 0.4, friction: 0.005 },
+  { name: "fruit4", radius: 50, bounce: 0.2, friction: 0.005 },
+  { name: "fruit5", radius: 65, bounce: 0.1, friction: 0.005 },
+  { name: "fruit6", radius: 70, bounce: 1, friction: 0.005 },
+  { name: "fruit7", radius: 80, bounce: 0.2, friction: 0.005 },
+  { name: "fruit8", radius: 90, bounce: 0.2, friction: 0.005 },
+  { name: "fruit9", radius: 100, bounce: 0.2, friction: 0.005 },
+  { name: "fruit10", radius: 110, bounce: 0.2, friction: 0.005 },
+  { name: "fruit11", radius: 120, bounce: 0.2, friction: 0.005 },
 ];
 
 class Main extends Phaser.Scene {
@@ -30,7 +32,7 @@ class Main extends Phaser.Scene {
   renderTexture!: Phaser.GameObjects.RenderTexture;
 
   preload() {
-    this.load.image("headstone", "assets/frame.png");
+    this.load.image("frame", "assets/frame.png");
 
     this.load.image("newgame", "assets/new_game.png");
 
@@ -77,20 +79,32 @@ class Main extends Phaser.Scene {
     this.dropper.setX(x);
   }
 
+  /**
+   * Add fruit to the scene
+   * @param x 
+   * @param y 
+   * @param fruit 
+   * @returns 
+   */
   addFruit(x: number, y: number, fruit: Fruit) {
     return this.matter.add
       .image(x, y, fruit.name)
       .setName(fruit.name)
       .setDisplaySize(fruit.radius * 2, fruit.radius * 2)
       .setCircle(fruit.radius)
-      .setFriction(0.005)
-      .setBounce(0.2)
+      // .setFriction(0.005)
+      .setFriction(fruit.friction)
+      // .setBounce(0.2)
+      .setBounce(fruit.bounce)
       .setDepth(-1)
       .setOnCollideWith(this.ceiling, () => {
         this.events.emit("ceilinghit");
       });
   }
 
+  /**
+   * Draw the current score
+   */
   drawScore() {
     this.renderTexture.clear();
     const textWidth = this.score
@@ -106,7 +120,7 @@ class Main extends Phaser.Scene {
 
   create() {
     this.add
-      .nineslice(0, 0, "headstone")
+      .nineslice(0, 0, "frame")
       .setOrigin(0)
       .setDisplaySize(+this.game.config.width, +this.game.config.height)
       .setPipeline("Light2D")
@@ -114,7 +128,8 @@ class Main extends Phaser.Scene {
 
     this.matter.world.setBounds(
       65,
-      0,
+      // 0,
+      -50, // bottom bounds
       +this.game.config.width - 130,
       +this.game.config.height - 1
     );
@@ -234,7 +249,7 @@ class Main extends Phaser.Scene {
         return;
       }
 
-      this.dropper.setVisible(false);
+      this.dropper.setVisible(false); // hide pointer
       this.time.delayedCall(500, () => this.dropper.setVisible(!this.gameOver));
 
       const currentFruit = fruits.find(
@@ -249,6 +264,7 @@ class Main extends Phaser.Scene {
       this.group.add(gameObject);
 
       const nextFruit = fruits[Math.floor(Math.random() * 5)];
+      console.log(nextFruit); // draw the next fruit on the screen
       this.updateDropper(nextFruit);
     });
 
