@@ -168,6 +168,7 @@ class Main extends Phaser.Scene {
         100
       )
       .setScale(0.8);
+      
     this.drawScore();
 
     const button = this.add
