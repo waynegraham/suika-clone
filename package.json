@@ -10,17 +10,36 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "deploy": "gh-pages -d dist",
-    "lint": "eslint . --ext .ts",
-    "lint-fix": "eslint . --ext .ts --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "vitest"
+    ]
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@eslint/js": "^9.1.1",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-jsx-a11y": "^6.8.0",
+    "eslint-plugin-prettier": "^5.1.3",
     "gh-pages": "^6.1.1",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "prettier": "^3.2.5",
     "typescript": "^5.4.5",
-    "vite": "^5.2.10"
+    "typescript-eslint": "^7.7.0",
+    "vite": "^5.2.10",
+    "vitest": "^1.5.0"
   },
   "dependencies": {
     "phaser": "^3.80.1"
