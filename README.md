@@ -24,3 +24,4 @@ Game clone build with Phaser, Matter.js, Typescript, and Vite. Based on https://
     - weight
     - friction
 
+assets from https://kenney.nl/
