@@ -25,3 +25,7 @@ Game clone build with Phaser, Matter.js, Typescript, and Vite. Based on https://
     - friction
 
 assets from https://kenney.nl/
+
+# ImageMagick
+
+    convert 1.png -resize x80\> 1.png
