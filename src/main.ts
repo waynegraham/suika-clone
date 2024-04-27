@@ -36,7 +36,7 @@ class Main extends Phaser.Scene {
 
     this.load.image("newgame", "assets/new_game.png");
 
-    this.load.audio("theme", ["music/holder.mp3"]);
+    this.load.audio("theme", ["music/theme.mp3"]);
 
     for (let i = 0; i <= 9; i++) {
       this.load.image(`${i}`, `assets/${i}.png`);
