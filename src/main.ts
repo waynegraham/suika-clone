@@ -1,27 +1,9 @@
 import "./style.css";
 
-import Phaser from "phaser";
+import * as Phaser from "phaser";
 
-type Fruit = {
-  name: string;
-  radius: number;
-  bounce: number;
-  friction: number;
-};
-
-const fruits: Fruit[] = [
-  { name: "fruit1", radius: 30, bounce: 0.8, friction: 0.005 },
-  { name: "fruit2", radius: 35, bounce: 0.6, friction: 0.005 },
-  { name: "fruit3", radius: 40, bounce: 0.4, friction: 0.005 },
-  { name: "fruit4", radius: 50, bounce: 0.2, friction: 0.005 },
-  { name: "fruit5", radius: 65, bounce: 0.1, friction: 0.005 },
-  { name: "fruit6", radius: 70, bounce: 1, friction: 0.005 },
-  { name: "fruit7", radius: 80, bounce: 0.2, friction: 0.005 },
-  { name: "fruit8", radius: 90, bounce: 0.2, friction: 0.005 },
-  { name: "fruit9", radius: 100, bounce: 0.2, friction: 0.005 },
-  { name: "fruit10", radius: 110, bounce: 0.2, friction: 0.005 },
-  { name: "fruit11", radius: 120, bounce: 0.2, friction: 0.005 },
-];
+import { PreloaderScene } from "./scenes/PreloaderScene";
+import { InitialScene } from "./scenes/InitialScene";
 
 class Main extends Phaser.Scene {
   score = 0;
@@ -31,23 +13,23 @@ class Main extends Phaser.Scene {
   gameOver = false;
   renderTexture!: Phaser.GameObjects.RenderTexture;
 
-  preload() {
-    this.load.image("frame", "assets/frame.png");
+  // preload() {
+  //   this.load.image("frame", "assets/frame.png");
 
-    this.load.image("newgame", "assets/new_game.png");
+  //   this.load.image("newgame", "assets/new_game.png");
 
-    this.load.audio(
-      'theme', ['music/holder.mp3']
-    );
+  //   this.load.audio(
+  //     'theme', ['music/holder.mp3']
+  //   );
 
-    for (let i = 0; i <= 9; i++) {
-        this.load.image(`${i}`, `assets/${i}.png`);
-    }
+  //   for (let i = 0; i <= 9; i++) {
+  //       this.load.image(`${i}`, `assets/${i}.png`);
+  //   }
 
-    for (const fruit of fruits) {
-      this.load.image(`${fruit.name}`, `assets/${fruit.name}.png`);
-    }
-  }
+  //   for (const fruit of fruits) {
+  //     this.load.image(`${fruit.name}`, `assets/${fruit.name}.png`);
+  //   }
+  // }
 
   updateDropper(fruit: Fruit) {
     this.dropper
@@ -81,25 +63,27 @@ class Main extends Phaser.Scene {
 
   /**
    * Add fruit to the scene
-   * @param x 
-   * @param y 
-   * @param fruit 
-   * @returns 
+   * @param x
+   * @param y
+   * @param fruit
+   * @returns
    */
   addFruit(x: number, y: number, fruit: Fruit) {
-    return this.matter.add
-      .image(x, y, fruit.name)
-      .setName(fruit.name)
-      .setDisplaySize(fruit.radius * 2, fruit.radius * 2)
-      .setCircle(fruit.radius)
-      // .setFriction(0.005)
-      .setFriction(fruit.friction)
-      // .setBounce(0.2)
-      .setBounce(fruit.bounce)
-      .setDepth(-1)
-      .setOnCollideWith(this.ceiling, () => {
-        this.events.emit("ceilinghit");
-      });
+    return (
+      this.matter.add
+        .image(x, y, fruit.name)
+        .setName(fruit.name)
+        .setDisplaySize(fruit.radius * 2, fruit.radius * 2)
+        .setCircle(fruit.radius)
+        // .setFriction(0.005)
+        .setFriction(fruit.friction)
+        // .setBounce(0.2)
+        .setBounce(fruit.bounce)
+        .setDepth(-1)
+        .setOnCollideWith(this.ceiling, () => {
+          this.events.emit("ceilinghit");
+        })
+    );
   }
 
   /**
@@ -131,7 +115,7 @@ class Main extends Phaser.Scene {
       // 0,
       -50, // bottom bounds
       +this.game.config.width - 130,
-      +this.game.config.height - 1
+      +this.game.config.height - 1,
     );
     this.group = this.add.group();
 
@@ -145,7 +129,7 @@ class Main extends Phaser.Scene {
         this.input.activePointer.y,
         1000,
         0x99ffff,
-        0.75
+        0.75,
       )
       .setScrollFactor(0);
     this.lights.enable().setAmbientColor(0xdddddd);
@@ -165,17 +149,17 @@ class Main extends Phaser.Scene {
         +this.game.config.width / 2,
         150,
         +this.game.config.width,
-        100
+        100,
       )
       .setScale(0.8);
-      
+
     this.drawScore();
 
     const button = this.add
       .image(
         +this.game.config.width / 2,
         +this.game.config.height / 2,
-        "newgame"
+        "newgame",
       )
       // .setScale(0.4)
       .setScale(1.0)
@@ -209,7 +193,7 @@ class Main extends Phaser.Scene {
     this.dropper = this.add.image(
       this.input.activePointer.x,
       0,
-      fruits[0].name
+      fruits[0].name,
     );
     const glow = this.dropper.postFX.addGlow(0x99ddff);
     this.tweens.addCounter({
@@ -228,7 +212,7 @@ class Main extends Phaser.Scene {
       +this.game.config.width / 2,
       100,
       +this.game.config.width,
-      200
+      200,
     );
     this.ceiling.isStatic = true;
 
@@ -254,13 +238,13 @@ class Main extends Phaser.Scene {
       this.time.delayedCall(500, () => this.dropper.setVisible(!this.gameOver));
 
       const currentFruit = fruits.find(
-        (fruit) => fruit.name === this.dropper.name
+        (fruit) => fruit.name === this.dropper.name,
       )!;
 
       const gameObject = this.addFruit(
         this.dropper.x,
         this.dropper.y,
-        currentFruit
+        currentFruit,
       );
       this.group.add(gameObject);
 
@@ -275,7 +259,7 @@ class Main extends Phaser.Scene {
         for (const pair of event.pairs) {
           if (pair.bodyA.gameObject?.name === pair.bodyB.gameObject?.name) {
             const fruitIndex = fruits.findIndex(
-              (fruit) => fruit.name === pair.bodyA.gameObject?.name
+              (fruit) => fruit.name === pair.bodyA.gameObject?.name,
             );
 
             if (fruitIndex === -1) {
@@ -292,7 +276,7 @@ class Main extends Phaser.Scene {
             emitter.emitParticleAt(
               pair.bodyB.position.x,
               pair.bodyB.position.y,
-              10
+              10,
             );
 
             const newFruit = fruits[fruitIndex + 1];
@@ -304,14 +288,14 @@ class Main extends Phaser.Scene {
             const gameObject = this.addFruit(
               pair.bodyB.position.x,
               pair.bodyB.position.y,
-              newFruit
+              newFruit,
             );
             this.group.add(gameObject);
 
             return;
           }
         }
-      }
+      },
     );
 
     this.events.on("ceilinghit", () => {
@@ -323,7 +307,7 @@ class Main extends Phaser.Scene {
 }
 
 new Phaser.Game({
-  scene: [Main],
+  scene: [PreloaderScene, InitialScene, Main],
   width: 600,
   height: 1000,
   scale: {
@@ -337,8 +321,8 @@ new Phaser.Game({
       debug: true,
       gravity: {
         y: 1,
-        x: 0
-      }
+        x: 0,
+      },
     },
   },
 });
